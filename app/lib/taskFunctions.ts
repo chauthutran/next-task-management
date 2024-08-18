@@ -1,11 +1,15 @@
-import TaskModel, { ITask } from "@/lib/shemas/Task.schema";
+import TaskModel from "@/lib/shemas/Task.schema";
+import { ITask } from "./definations";
 
 // Create a new task
 export const createTask = async (
   taskData: Omit<ITask, "_id">
 ): Promise<ITask> => {
-  const task = new TaskModel(taskData);
-  return task.save();
+  // const task = new TaskModel(taskData);
+  // return task.save();
+
+  const newUser = await TaskModel.create(taskData);
+  return newUser;
 };
 
 // Get all tasks

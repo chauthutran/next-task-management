@@ -1,14 +1,9 @@
-import mongoose, { Document, Schema } from "mongoose";
+"use server";
 
-// Define TypeScript interface for Task
-export interface ITask extends Document {
-  id: string;
-  title: string;
-  description: string;
-  dueDate: Date;
-  status: 'pending' | 'in-progress' | 'completed';
-  assignedTo: string; // User ID of the worker
-}
+import { mongoose } from "@/lib/db";
+import { ITask } from "../definations";
+import { Schema } from "mongoose";
+
 
 // Define Mongoose Schema
 const TaskSchema: Schema = new Schema({
@@ -24,6 +19,6 @@ const TaskSchema: Schema = new Schema({
 });
 
 // Create and export the Mongoose model
-const TaskModel =
+const Task =
   mongoose.models.Task || mongoose.model<ITask>("Task", TaskSchema);
-export default TaskModel;
+export default Task;

@@ -2,6 +2,10 @@
 
 
 import { Button, Calendar } from "nextjs-jc-component-libs/dist/components";
+import { MainUiProvider } from "./lib/contexts/MainUiContext";
+import { AuthProvider } from "./lib/contexts/AuthContext";
+import AppWrapper from "./ui/AppWrapper";
+import TaskForm from "./ui/manger-tasks/TaskForm";
 
 
 export default function Home() {
@@ -27,9 +31,16 @@ const events = [
 ]
 
   return (
-    <main className="flex min-h-screen flex-col items-center justify-between p-24">
-		{/* <Button onClick={() => alert('Button clicked!')} label="Click Me"  /> */}
-     	<Calendar events={events} />
-    </main>
+	<main >
+		<MainUiProvider>
+			<AuthProvider>
+				<div className="h-screen flex flex-col">
+					<main className="flex-1 overflow-auto">
+						<AppWrapper />
+					</main>
+				</div>
+			</AuthProvider>
+		</MainUiProvider>
+	</main>
   );
 }
