@@ -11,6 +11,7 @@ import * as Utils from "@/lib/utils";
 import { JSONObject } from "@/lib/definations";
 import { useMainUi } from "@/lib/contexts/MainUiContext";
 import { useAuth } from "@/lib/contexts/AuthContext";
+import { MdEmail } from "react-icons/md";
 
 export default function RegisterForm() {
 
@@ -25,12 +26,6 @@ export default function RegisterForm() {
 	const [confirmPassword, setConfirmPassword] = useState("");
 	const [errorMsg, setErrorMsg] = useState<string | null>(null);
 
-
-	// useEffect(() => {
-	//   if( user != null ) {
-	// 	alert("User is registered")
-	//   }
-	// },[user])
 
 	const handleRegisterBtn = (e: React.MouseEvent<HTMLButtonElement>) => {
 		e.preventDefault();
@@ -103,7 +98,7 @@ export default function RegisterForm() {
 						placeholder="Enter your email"
 						onChange={(e) => { setEmail(e.target.value) }}
 					/>
-					<IoKeyOutline className="pointer-events-none absolute left-3 top-1/2 h-[18px] w-[18px] -translate-y-1/2 text-gray-500 peer-focus:text-gray-900" />
+					<MdEmail className="pointer-events-none absolute left-3 top-1/2 h-[18px] w-[18px] -translate-y-1/2 text-gray-500 peer-focus:text-gray-900" />
 					
 					{email === "" && <span className="text-red-500 italic">This field is required</span>}
 				</div>
@@ -137,6 +132,29 @@ export default function RegisterForm() {
 			<div className="mb-4">
 				<label
 					className="block text-xs font-medium text-gray-900"
+					htmlFor="role"
+				>
+					Role
+				</label>
+				<div className="relative">
+					<select
+						className="peer block w-full rounded-md border border-gray-200 py-[9px] pl-10 text-sm outline-2 placeholder:text-gray-500"
+						id="role"
+						name="role"
+						value={role}
+						required
+						onChange={(e) => setRole(e.target.value)}
+					>
+						<option value="manager">Manager</option>
+						<option value="worker">Worker</option>
+					</select>
+					<IoKeyOutline className="pointer-events-none absolute left-3 top-1/2 h-[18px] w-[18px] -translate-y-1/2 text-gray-500 peer-focus:text-gray-900" />
+				</div>
+			</div>
+
+			<div className="mb-4">
+				<label
+					className="block text-xs font-medium text-gray-900"
 					htmlFor="password"
 				>
 					Password
@@ -156,29 +174,6 @@ export default function RegisterForm() {
 					<IoKeyOutline className="pointer-events-none absolute left-3 top-1/2 h-[18px] w-[18px] -translate-y-1/2 text-gray-500 peer-focus:text-gray-900" />
 					
 					{password === "" && <span className="text-red-500 italic">This field is required</span>}
-				</div>
-			</div>
-
-			<div className="mb-4">
-				<label
-					className="block text-xs font-medium text-gray-900"
-					htmlFor="role"
-				>
-					User Type
-				</label>
-				<div className="relative">
-					<select
-						className="peer block w-full rounded-md border border-gray-200 py-[9px] pl-10 text-sm outline-2 placeholder:text-gray-500"
-						id="type"
-						name="type"
-						value={role}
-						required
-						onChange={(e) => setRole(e.target.value)}
-					>
-						<option value="manager">Manager</option>
-						<option value="user">User</option>
-					</select>
-					<IoKeyOutline className="pointer-events-none absolute left-3 top-1/2 h-[18px] w-[18px] -translate-y-1/2 text-gray-500 peer-focus:text-gray-900" />
 				</div>
 			</div>
 			

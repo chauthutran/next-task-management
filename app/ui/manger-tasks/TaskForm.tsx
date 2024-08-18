@@ -1,7 +1,9 @@
+"use client";
+
 import { ITask, TaskStatus } from "@/lib/definations";
 import { createTask } from "@/lib/taskFunctions";
 import { DateField } from "nextjs-jc-component-libs/dist/components";
-import { useRef, useState } from "react";
+import { useRef, useState, useTransition } from "react";
 
 export default function TaskForm() {
 
@@ -10,12 +12,13 @@ export default function TaskForm() {
 	// const dueDateRef = useRef<HTMLInputElement>(null);
 	const statusRef = useRef<HTMLSelectElement>(null);
 	const assignedToRef = useRef<HTMLInputElement>(null);
-	const [dueDate, setDueDate] = useState< Date | null>(null);
+	const [dueDate, setDueDate] = useState<Date | null>(null);
+	const [isPending, startTransition] = useTransition();
 
-	const saveTask = async(e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+	const saveTask = async (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
 		e.preventDefault();
-console.log("save task");
-		if( titleRef.current && 
+		console.log("save task");
+		if (titleRef.current &&
 			descriptionRef.current &&
 			dueDate != null &&
 			statusRef.current &&
@@ -26,12 +29,25 @@ console.log("save task");
 			const status = statusRef.current.value as TaskStatus;
 			const assignedTo = assignedToRef.current.value;
 
-			const payload: ITask = {title, description, dueDate, status, assignedTo};
-			const task = await createTask(payload);
-			console.log(task);
-			alert("Save successfully !");
+			const payload: ITask = { title, description, dueDate, status, assignedTo };
+
+			const response = await fetch("api/tasks", {
+				method: "POST",
+				headers: {
+					"Content-type": "appliction/json"
+				},
+				body: JSON.stringify(payload)
+			})
+
+			if (!response.ok) {
+				alert("Network response was not ok");
+			}
+			else {
+				alert("The task is saved successfully !!!");
+			}
+
 		}
-		
+
 	}
 
 	return (
@@ -104,9 +120,9 @@ console.log("save task");
 			<button
 				type="submit"
 				className="w-full bg-blue-500 text-white p-2 rounded hover:bg-blue-600"
-				onClick={(e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => saveTask(e) }
+				onClick={(e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => saveTask(e)}
 			>
-				Save
+				{isPending ? "Saving..." : "Save Task"}
 			</button>
 		</div>
 	)

@@ -12,6 +12,9 @@ export default function AppWrapper() {
     // const { user } = useAuth();
     return (
         <>
+        <h2>Registration Form</h2>
+        <RegisterForm />
+        
             <h2>Task Management</h2>
             <TaskForm />
             {/* { mainPage == Constant.UI_LOGIN_PAGE && <LoginForm /> }
