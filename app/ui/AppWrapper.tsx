@@ -5,22 +5,25 @@ import LoginForm from "./auth/LoginForm";
 import RegisterForm from "./auth/RegisterForm";
 import { useAuth } from "@/lib/contexts/AuthContext";
 import { useMainUi } from "@/lib/contexts/MainUiContext";
-import TaskForm from "./manger-tasks/TaskForm";
+import TaskForm from "./tasks/TaskForm";
+import TaskPage from "./tasks/TaskPage";
+
 
 export default function AppWrapper() {
-    // const { mainPage } = useMainUi();
-    // const { user } = useAuth();
+    const { mainPage } = useMainUi();
+    const { user } = useAuth();
+
     return (
         <>
-        <h2>Registration Form</h2>
-        <RegisterForm />
+        <TaskPage />
         
-            <h2>Task Management</h2>
-            <TaskForm />
-            {/* { mainPage == Constant.UI_LOGIN_PAGE && <LoginForm /> }
+            { mainPage == Constant.PAGE_LOGIN && <LoginForm /> }
 
-            { mainPage == Constant.UI_REGISTRATION_PAGE && <RegisterForm /> } */}
+            { mainPage == Constant.PAGE_LOGIN && <RegisterForm /> }
+
             
+            
+            {user !== null && mainPage == Constant.PAGE_TASK_LIST && <TaskPage />  }
         </>
     )
 }

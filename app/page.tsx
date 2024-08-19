@@ -5,7 +5,7 @@ import { Button, Calendar } from "nextjs-jc-component-libs/dist/components";
 import { MainUiProvider } from "./lib/contexts/MainUiContext";
 import { AuthProvider } from "./lib/contexts/AuthContext";
 import AppWrapper from "./ui/AppWrapper";
-import TaskForm from "./ui/manger-tasks/TaskForm";
+import TaskForm from "./ui/tasks/TaskForm";
 
 
 export default function Home() {
